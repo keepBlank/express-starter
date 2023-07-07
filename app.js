@@ -1,12 +1,25 @@
+const express = require('express');
+const {request} = require('express');
 
-const express = require('express')
-const app = express()
-const port = 8000
+const app = express();
 
-app.get('/xxx', (req, res) => {
-    res.send('你好,Express!')
-})
+app.use((request, response, next) => {
+    console.log(request.url);
+    response.write('Hi,I am Server Client')
+    next()
+});
 
-app.listen(port, () => {
-    console.log(`现在监听的端口是 ${port}`)
-})
+app.use((request, response, next) => {
+    console.log(2);
+    response.write('Hi,I am Server Client 2')
+    next()
+});
+
+app.use((request, response, next) => {
+   response.end()
+    next()
+});
+
+app.listen(3000,()=>{
+    console.log('正在监听3000端口');
+});
